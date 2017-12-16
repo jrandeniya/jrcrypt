@@ -1,0 +1,23 @@
+{
+  "name": "jcryp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "engines": {
+    "node": "6.11.1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "btc-markets": "0.0.10",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "node-binance-api": "^0.2.11"
+  },
+  "devDependencies": {
+    "nodemon": "^1.13.3"
+  }
+}
