@@ -5,7 +5,7 @@ const BTCMarkets  = require('btc-markets');
 const binance = require('node-binance-api');
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT;
 const hash = process.env.HASH;
 const coins = {
 	btc: parseFloat(process.env.BTC),
