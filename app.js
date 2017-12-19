@@ -3,15 +3,22 @@ require('dotenv').config();
 const express = require('express');
 const BTCMarkets  = require('btc-markets');
 const binance = require('node-binance-api');
+const currencyFormatter = require('currency-formatter');
 
 const app = express();
 const port = process.env.PORT;
-const hash = process.env.HASH;
-
 const btcm = new BTCMarkets(null, null);
 
-app.get('/', async (req, res) => {
+function thousandSep(val) {
+	const parts = String(val).split('.');
+	const part1 = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+	const part2 = parts[1];
+	return (part1 + '.' + part2);
+}
 
+app.set('view engine', 'ejs');
+
+app.get('/', async (req, res) => {
 	const coins = {
 		btc: parseFloat(req.query.BTC) || 0,
 		ada: parseFloat(req.query.ADA) || 0,
@@ -22,38 +29,33 @@ app.get('/', async (req, res) => {
 
 	const [ BTC_AUD_PRICE, STR_ADA_BTC_PRICE ] = await Promise.all([
 		GET_BTC_AUD_PRICE,
-		GET_ADA_BTC_PRICE
+		GET_ADA_BTC_PRICE,
 		]);
+
+	const DATA_RETRIEVED = new Date();
 
 	const ADA_BTC_PRICE = parseFloat(STR_ADA_BTC_PRICE);
 
 	const btc_value = BTC_AUD_PRICE * coins.btc;
 	const ada_value = BTC_AUD_PRICE * ADA_BTC_PRICE * coins.ada;
 
-	const response = {	
-		TOTAL_PORTFOLIO_VALUE: `A$${(btc_value + ada_value).toFixed(2)}`,
+	const data = {	
+		DATA_RETRIEVED,
+		TOTAL_PORTFOLIO_VALUE: currencyFormatter.format(btc_value + ada_value, { code: 'AUD' }),
+		BITCOIN: {
+			total_coins: thousandSep(coins.btc),
+			market_price_aud: currencyFormatter.format(BTC_AUD_PRICE, { code: 'AUD' }),
+			current_value: currencyFormatter.format(btc_value, { code: 'AUD' }),
+		},
+		CARDANO: {
+			total_coins: thousandSep(coins.ada),
+			market_price_btc: ADA_BTC_PRICE,
+			market_price_aud: currencyFormatter.format(BTC_AUD_PRICE * ADA_BTC_PRICE, { code: 'AUD' }),
+			current_value: currencyFormatter.format(ada_value, { code: 'AUD' }),
+		},
 	};
 
-	if (coins.btc) {
-		response.BITCOIN = {
-			total_coins: coins.btc,
-			source: 'BTCMarkets',
-			market_price_aud: BTC_AUD_PRICE,
-			current_value: `A$${btc_value.toFixed(2)}`,
-		};
-	}
-
-	if (coins.ada) {
-		response.CARDANO = {
-			total_coins: coins.ada,
-			source: 'Binance',
-			market_price_btc: parseFloat(ADA_BTC_PRICE),
-			market_price_aud: BTC_AUD_PRICE * ADA_BTC_PRICE,
-			current_value: `A$${ada_value.toFixed(2)}`,
-		};
-	}
-
-	return res.json(response);
+	return res.render('home', data);
 });
 
 app.listen(port, () => console.log('We are live on ' + port));

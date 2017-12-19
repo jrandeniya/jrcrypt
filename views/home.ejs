@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>JRCrypt</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<style>
+	body {
+		background-color: #ECECEC;
+		padding: 40px;
+	}
+	.table td.footnote {
+		font-size: 12px;
+	}
+	.display-4 {
+		margin-top: 24px;
+	}
+</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm">
+				<table class="table table-bordered table-dark">
+					<thead>
+						<tr>
+							<th scope="col">Coin</th>
+							<th scope="col">Price Source</th>
+							<th scope="col"># of Coins</th>
+							<th scope="col">Market Price (AUD)</th>
+							<th scope="col">Current Value (AUD)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><strong>Bitcoin</strong></td>
+							<td>BTCMarkets</td>
+							<td><%= BITCOIN.total_coins %> <small>BTC</small></td>
+							<td><%= BITCOIN.market_price_aud %><small>/BTC</small></td>
+							<td><%= BITCOIN.current_value %></td>
+						</tr>
+						<tr>
+							<td><strong>Cardano</strong></td>
+							<td>Binance</td>
+							<td><%= CARDANO.total_coins %> <small>ADA</small></td>
+							<td><%= CARDANO.market_price_aud %><small>/ADA</small></td>
+							<td><%= CARDANO.current_value %></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td class="text-right footnote" colspan="5"><strong>Updated:</strong> <%= DATA_RETRIEVED %></td>
+						</tr>
+					</table>
+					<h3 class="display-4 text-center"><strong>Total Portfolio:</strong> <%= TOTAL_PORTFOLIO_VALUE %> </h3>
+				</div>
+			</div>
+		</div>
+	</body>
+	</html>
