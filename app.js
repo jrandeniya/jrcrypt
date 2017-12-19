@@ -37,7 +37,8 @@ app.get('/', async (req, res) => {
 	if (coins.btc) {
 		response.BITCOIN = {
 			total_coins: coins.btc,
-			current_market_price_in_aud: BTC_AUD_PRICE,
+			source: 'BTCMarkets',
+			market_price_aud: BTC_AUD_PRICE,
 			current_value: `A$${btc_value.toFixed(2)}`,
 		};
 	}
@@ -45,8 +46,9 @@ app.get('/', async (req, res) => {
 	if (coins.ada) {
 		response.CARDANO = {
 			total_coins: coins.ada,
-			current_market_price_in_btc: parseFloat(ADA_BTC_PRICE),
-			current_market_price_in_aud: BTC_AUD_PRICE * ADA_BTC_PRICE,
+			source: 'Binance',
+			market_price_btc: parseFloat(ADA_BTC_PRICE),
+			market_price_aud: BTC_AUD_PRICE * ADA_BTC_PRICE,
 			current_value: `A$${ada_value.toFixed(2)}`,
 		};
 	}
