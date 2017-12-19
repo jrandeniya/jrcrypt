@@ -13,3 +13,7 @@ Simple service to return your current crypto-AUD position for Bitcoin (BTC) and 
 * `npm install` 
 * `npm run dev`
 * Visit `http://localhost:8000/?BTC=0.001&ADA=100`
+
+## ToDo
+* Add favicon
+* Add transaction fees into calculations
