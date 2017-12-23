@@ -15,6 +15,14 @@ app.set('view engine', 'ejs');
 const port = process.env.PORT;
 const btcm = new BTCMarkets(null, null);
 
+app.get('/check', async (req, res) => {
+	return btcm.getTradingFee("BTC", "AUD", function(err, data)
+	{
+		if(err) return res.json(err);
+		return res.json(data);
+	});
+});
+
 app.get('/', async (req, res) => {
 	const coins = {
 		btc: parseFloat(req.query.BTC) || 0,
@@ -51,6 +59,7 @@ app.get('/', async (req, res) => {
 			market_price_aud_via_btc: currencyFormatter.format(BTC_AUD_PRICE * ADA_BTC_PRICE, { code: 'AUD', precision: 4 }),
 			market_price_aud_via_eth: currencyFormatter.format(ETH_AUD_PRICE * ADA_ETH_PRICE, { code: 'AUD', precision: 4 }),
 			current_value: currencyFormatter.format(Math.max(ada_value_via_eth, ada_value_via_btc), { code: 'AUD' }),
+			current_value_via: ada_value_via_eth >= ada_value_via_btc ? '(via ETH)' : '(via BTC)',
 		},
 	};
 
