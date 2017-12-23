@@ -44,7 +44,10 @@
 							<td><strong>Cardano</strong></td>
 							<td>Binance</td>
 							<td><%= CARDANO.total_coins %> <small>ADA</small></td>
-							<td><%= CARDANO.market_price_aud %><small>/ADA</small></td>
+							<td>
+								<div><%= CARDANO.market_price_aud_via_btc %><small>/ADA (via BTC)</small></div>
+								<div><%= CARDANO.market_price_aud_via_eth %><small>/ADA (via ETH)</small></div>
+							</td>
 							<td><%= CARDANO.current_value %></td>
 						</tr>
 					</tbody>
@@ -53,7 +56,11 @@
 							<td class="text-right footnote" colspan="5"><strong>Updated:</strong> <%= DATA_RETRIEVED %></td>
 						</tr>
 					</table>
-					<h3 class="display-4 text-center"><strong>Total Portfolio:</strong> <%= TOTAL_PORTFOLIO_VALUE %> </h3>
+					<h3 class="display-3 text-center">
+						<div><%= TOTAL_PORTFOLIO_VALUE %></div>
+					</h3>
+					<hr/>
+					<h5 class="display-5 text-center">Conversions do not account for transaction fees.</h5>
 				</div>
 			</div>
 		</div>
