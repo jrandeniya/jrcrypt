@@ -42,16 +42,23 @@ app.get('/', async (req, res) => {
 
 	const data = {	
 		DATA_RETRIEVED,
+		PATH: req.protocol + '://' + req.get('host'),
 		TOTAL_PORTFOLIO_VALUE: currencyFormatter.format(btc_value + max_ada_value, { code: 'AUD' }),
 		PORTFOLIO_DIFF: {
 			value: (coins.aud ? (btc_value + max_ada_value - coins.aud) / coins.aud : 0) * 100,
 		},
+		AUD: {
+			total_coins_raw: coins.aud,
+			total_coins: thousandSep(coins.aud),
+		},
 		BITCOIN: {
+			total_coins_raw: coins.btc,
 			total_coins: thousandSep(coins.btc),
 			market_price_aud: currencyFormatter.format(BTC_AUD_PRICE, { code: 'AUD', precision: 2 }),
 			current_value: currencyFormatter.format(btc_value, { code: 'AUD' }),
 		},
 		CARDANO: {
+			total_coins_raw: coins.ada,
 			total_coins: thousandSep(coins.ada),
 			market_price_aud_via_btc: currencyFormatter.format(BTC_AUD_PRICE * ADA_BTC_PRICE, { code: 'AUD', precision: 4 }),
 			market_price_aud_via_eth: currencyFormatter.format(ETH_AUD_PRICE * ADA_ETH_PRICE, { code: 'AUD', precision: 4 }),

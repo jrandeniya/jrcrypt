@@ -9,8 +9,8 @@
 		background-color: #ECECEC;
 		padding: 40px;
 	}
-	.display-5 {
-		margin-top: 18px;
+	.title {
+		margin: 20px 0;
 	}
 	small.positive {
 		font-size: 24px;
@@ -20,11 +20,26 @@
 		font-size: 24px;
 		color: red;
 	}
+	.header {
+		padding-bottom: 10px;
+		border-bottom: 1px dashed #bfbfbf;
+	}
+	.price {
+		margin: 32px 0;
+	}
 </style>
 </head>
 
 <body>
 	<div class="container">
+		<div class="row">
+			<div class="col-sm">
+				<h3 class="display-4 title text-center header">JRCrypt</h3>
+				<pre class="text-muted text-center">
+					<strong>URL Params:</strong> <%= PATH %>/?BTC=<%= BITCOIN.total_coins_raw %>&ADA=<%= CARDANO.total_coins_raw %>&AUD=<%= AUD.total_coins_raw %> 
+				</pre>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-sm">
 				<table class="table table-bordered table-dark">
@@ -56,16 +71,16 @@
 							<td><%= CARDANO.current_value %> <small><%= CARDANO.current_value_via %></small></td>
 						</tr>
 					</tbody>
-					</table>
-					<h3 class="display-3 text-center">
-						<%= TOTAL_PORTFOLIO_VALUE %>
-						<small class="<%= PORTFOLIO_DIFF.class %>">(<%= PORTFOLIO_DIFF.value %>%)</small>
-					</h3>
-					<hr/>
-					<h5 class="display-5 text-center">Conversions do not account for transaction fees.</h5>
-					<p class="text-center"><small class="text-muted"><strong>Updated:</strong> <%= DATA_RETRIEVED %></small></p>
-				</div>
+				</table>
+				<h3 class="display-4 title price text-center">
+					<%= TOTAL_PORTFOLIO_VALUE %>
+					<small class="<%= PORTFOLIO_DIFF.class %>">(<%= PORTFOLIO_DIFF.value %>%)</small>
+				</h3>
+				<hr/>
+				<h5 class="display-5 title text-center">Conversions do not account for transaction fees.</h5>
+				<p class="text-center"><small class="text-muted"><strong>Updated:</strong> <%= DATA_RETRIEVED %></small></p>
 			</div>
 		</div>
-	</body>
-	</html>
+	</div>
+</body>
+</html>
