@@ -21,4 +21,5 @@ Simple service to return your current crypto-AUD position for Bitcoin (BTC) and 
 
 ## ToDo
 * Add ETH, LTC, XRP
+* Only show table rows if currency has coins
 * Add transaction fees into calculations
