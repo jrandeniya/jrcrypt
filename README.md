@@ -21,5 +21,4 @@ Simple service to return your current crypto-AUD position for Bitcoin (BTC) and 
 
 ## ToDo
 * Add ETH, LTC, XRP
-* Add error handlers / graceful fails for BTCMarkets / Binance API calls. 
 * Add transaction fees into calculations

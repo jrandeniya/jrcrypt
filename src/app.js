@@ -25,11 +25,16 @@ app.get('/', async (req, res) => {
 	const GET_ETH_AUD_PRICE = new Promise((resolve, reject) => btcm.getTick("ETH", "AUD", (err, data) => err ? reject(err) : resolve(data.lastPrice)));
 	const GET_ALT_PRICES = new Promise((resolve, reject) => binance.prices(ticker => resolve(ticker)));
 
-	const [ BTC_AUD_PRICE, ETH_AUD_PRICE, { ADAETH, ADABTC } ] = await Promise.all([
-		GET_BTC_AUD_PRICE,
-		GET_ETH_AUD_PRICE,
-		GET_ALT_PRICES,
-		]);
+	let BTC_AUD_PRICE, ETH_AUD_PRICE, ADAETH, ADABTC;
+	try {
+		[ BTC_AUD_PRICE, ETH_AUD_PRICE, { ADAETH, ADABTC } ] = await Promise.all([
+			GET_BTC_AUD_PRICE,
+			GET_ETH_AUD_PRICE,
+			GET_ALT_PRICES,
+			]);
+	} catch (e) {
+		return res.render('pages/error', { error: e.message });
+	}
 
 	const DATA_RETRIEVED = new Date();
 	const ADA_BTC_PRICE = parseFloat(ADABTC);
@@ -70,7 +75,7 @@ app.get('/', async (req, res) => {
 	data.PORTFOLIO_DIFF.class = data.PORTFOLIO_DIFF.value >= 0 ? 'positive' : 'negative';
 	data.PORTFOLIO_DIFF.value = `${data.PORTFOLIO_DIFF.value >= 0 ? '+' : ''}${thousandSep(data.PORTFOLIO_DIFF.value.toFixed(2))}`;
 
-	return res.render('home', data);
+	return res.render('pages/home', data);
 });
 
 app.listen(port, () => console.log('We are live on ' + port));
