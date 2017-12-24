@@ -15,18 +15,11 @@ app.set('view engine', 'ejs');
 const port = process.env.PORT;
 const btcm = new BTCMarkets(null, null);
 
-app.get('/check', async (req, res) => {
-	return btcm.getTradingFee("BTC", "AUD", function(err, data)
-	{
-		if(err) return res.json(err);
-		return res.json(data);
-	});
-});
-
 app.get('/', async (req, res) => {
 	const coins = {
 		btc: parseFloat(req.query.BTC) || 0,
 		ada: parseFloat(req.query.ADA) || 0,
+		aud: parseFloat(req.query.AUD) || 0,
 	};
 	const GET_BTC_AUD_PRICE = new Promise((resolve, reject) => btcm.getTick("BTC", "AUD", (err, data) => err ? reject(err) : resolve(data.lastPrice)));
 	const GET_ETH_AUD_PRICE = new Promise((resolve, reject) => btcm.getTick("ETH", "AUD", (err, data) => err ? reject(err) : resolve(data.lastPrice)));
@@ -45,10 +38,14 @@ app.get('/', async (req, res) => {
 	const btc_value = BTC_AUD_PRICE * coins.btc;
 	const ada_value_via_btc = BTC_AUD_PRICE * ADA_BTC_PRICE * coins.ada;
 	const ada_value_via_eth = ETH_AUD_PRICE * ADA_ETH_PRICE * coins.ada;
+	const max_ada_value = Math.max(ada_value_via_eth, ada_value_via_btc);
 
 	const data = {	
 		DATA_RETRIEVED,
-		TOTAL_PORTFOLIO_VALUE: currencyFormatter.format(btc_value + Math.max(ada_value_via_eth, ada_value_via_btc), { code: 'AUD' }),
+		TOTAL_PORTFOLIO_VALUE: currencyFormatter.format(btc_value + max_ada_value, { code: 'AUD' }),
+		PORTFOLIO_DIFF: {
+			value: (coins.aud ? (btc_value + max_ada_value - coins.aud) / coins.aud : 0) * 100,
+		},
 		BITCOIN: {
 			total_coins: thousandSep(coins.btc),
 			market_price_aud: currencyFormatter.format(BTC_AUD_PRICE, { code: 'AUD', precision: 2 }),
@@ -58,10 +55,13 @@ app.get('/', async (req, res) => {
 			total_coins: thousandSep(coins.ada),
 			market_price_aud_via_btc: currencyFormatter.format(BTC_AUD_PRICE * ADA_BTC_PRICE, { code: 'AUD', precision: 4 }),
 			market_price_aud_via_eth: currencyFormatter.format(ETH_AUD_PRICE * ADA_ETH_PRICE, { code: 'AUD', precision: 4 }),
-			current_value: currencyFormatter.format(Math.max(ada_value_via_eth, ada_value_via_btc), { code: 'AUD' }),
+			current_value: currencyFormatter.format(max_ada_value, { code: 'AUD' }),
 			current_value_via: ada_value_via_eth >= ada_value_via_btc ? '(via ETH)' : '(via BTC)',
 		},
 	};
+
+	data.PORTFOLIO_DIFF.class = data.PORTFOLIO_DIFF.value >= 0 ? 'positive' : 'negative';
+	data.PORTFOLIO_DIFF.value = `${data.PORTFOLIO_DIFF.value >= 0 ? '+' : ''}${thousandSep(data.PORTFOLIO_DIFF.value.toFixed(2))}`;
 
 	return res.render('home', data);
 });

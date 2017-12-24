@@ -12,6 +12,14 @@
 	.display-5 {
 		margin-top: 18px;
 	}
+	small.positive {
+		font-size: 24px;
+		color: 	green;
+	}
+	small.negative {
+		font-size: 24px;
+		color: red;
+	}
 </style>
 </head>
 
@@ -50,7 +58,8 @@
 					</tbody>
 					</table>
 					<h3 class="display-3 text-center">
-						<div><%= TOTAL_PORTFOLIO_VALUE %></div>
+						<%= TOTAL_PORTFOLIO_VALUE %>
+						<small class="<%= PORTFOLIO_DIFF.class %>">(<%= PORTFOLIO_DIFF.value %>%)</small>
 					</h3>
 					<hr/>
 					<h5 class="display-5 text-center">Conversions do not account for transaction fees.</h5>
