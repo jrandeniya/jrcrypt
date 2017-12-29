@@ -7,10 +7,11 @@ The following APIs are used to retrieved current exchange rates for various coin
 * Binance (https://www.binance.com/restapipub.html).
 * BitGrail (https://bitgrail.com/api-documentation)
 
-[Heroku Demo](https://jrcrypt.herokuapp.com/?BTC=0.1&XRB=100&ADA=1000&AUD=1000)
+[Heroku Demo](https://jrcrypt.herokuapp.com/?BTC=0.1&ETH=10&XRB=100&ADA=1000&AUD=10000)
 
-## URL Paramaters (?BTC=0.1&XRB=100&ADA=1000&AUD=1000)
+## URL Paramaters (?BTC=0.1&ETH=10&XRB=100&ADA=1000&AUD=10000)
 * BTC (Float) - total Bitcoin coins
+* ETH (Float) - total Ethereum coins
 * ADA (Float) - total Cardano coins
 * XRB (Float) - total RaiBlock coins
 * AUD (Float) - total AUD investment to gauge +/- %
@@ -20,10 +21,10 @@ The following APIs are used to retrieved current exchange rates for various coin
 * Update `.env` with an available local PORT.
 * `npm install` 
 * `npm run dev`
-* Visit `http://localhost:8000/?BTC=0.1&XRB=100&ADA=1000&AUD=1000`
+* Visit `http://localhost:8000/?BTC=0.1&ETH=10&XRB=100&ADA=1000&AUD=10000`
 
 ## ToDo
-* Add ETH, LTC, XRP
+* Add LTC, XRP
 * Only show table rows if currency has coins
 * Refactor BTCM/Binance calls into service files
 * Add transaction fees into calculations

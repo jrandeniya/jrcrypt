@@ -19,6 +19,7 @@ const btcm = new BTCMarkets(null, null);
 app.get('/', async (req, res) => {
 	const coins = {
 		btc: parseFloat(req.query.BTC) || 0,
+		eth: parseFloat(req.query.ETH) || 0,
 		ada: parseFloat(req.query.ADA) || 0,
 		xrb: parseFloat(req.query.XRB) || 0,
 		aud: parseFloat(req.query.AUD) || 0,
@@ -28,7 +29,7 @@ app.get('/', async (req, res) => {
 	const GET_ALT_PRICES = new Promise((resolve, reject) => binance.prices(ticker => resolve(ticker)));
 	const GET_BITTRAIL_PRICES = bitgrail.getMarkets();
 
-	let BTC_AUD_PRICE, ETH_AUD_PRICE, ADAETH, ADABTC;
+	let BTC_AUD_PRICE, ETH_AUD_PRICE, ADAETH, ADABTC, XRB_BTC_PRICE, XRB_ETH_PRICE;
 	try {
 		[ BTC_AUD_PRICE, ETH_AUD_PRICE, { ADAETH, ADABTC }, { XRB_BTC_PRICE, XRB_ETH_PRICE } ] = await Promise.all([
 			GET_BTC_AUD_PRICE,
@@ -47,6 +48,9 @@ app.get('/', async (req, res) => {
 	// BTC 
 	const btc_value = BTC_AUD_PRICE * coins.btc;
 
+	// ETH
+	const eth_value = ETH_AUD_PRICE * coins.eth;
+
 	// XRB 
 	const xrb_value_via_btc = BTC_AUD_PRICE * XRB_BTC_PRICE * coins.xrb;
 	const xrb_value_via_eth = ETH_AUD_PRICE * XRB_ETH_PRICE * coins.xrb;
@@ -60,9 +64,9 @@ app.get('/', async (req, res) => {
 	const data = {	
 		DATA_RETRIEVED,
 		PATH: req.protocol + '://' + req.get('host'),
-		TOTAL_PORTFOLIO_VALUE: currencyFormatter.format(btc_value + max_ada_value + max_xrb_value, { code: 'AUD' }),
+		TOTAL_PORTFOLIO_VALUE: currencyFormatter.format(btc_value + eth_value + max_ada_value + max_xrb_value, { code: 'AUD' }),
 		PORTFOLIO_DIFF: {
-			value: (coins.aud ? (btc_value + max_ada_value + max_xrb_value - coins.aud) / coins.aud : 0) * 100,
+			value: (coins.aud ? (btc_value + eth_value + max_ada_value + max_xrb_value - coins.aud) / coins.aud : 0) * 100,
 		},
 		AUD: {
 			total_coins_raw: coins.aud,
@@ -73,6 +77,12 @@ app.get('/', async (req, res) => {
 			total_coins: thousandSep(coins.btc),
 			market_price_aud: currencyFormatter.format(BTC_AUD_PRICE, { code: 'AUD', precision: 2 }),
 			current_value: currencyFormatter.format(btc_value, { code: 'AUD' }),
+		},
+		ETHEREUM: {
+			total_coins_raw: coins.eth,
+			total_coins: thousandSep(coins.eth),
+			market_price_aud: currencyFormatter.format(ETH_AUD_PRICE, { code: 'AUD', precision: 2 }),
+			current_value: currencyFormatter.format(eth_value, { code: 'AUD' }),
 		},
 		RAIBLOCK: {
 			total_coins_raw: coins.xrb,
