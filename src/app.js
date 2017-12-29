@@ -20,20 +20,23 @@ app.get('/', async (req, res) => {
 	const coins = {
 		btc: parseFloat(req.query.BTC) || 0,
 		eth: parseFloat(req.query.ETH) || 0,
+		xrp: parseFloat(req.query.XRP) || 0,
 		ada: parseFloat(req.query.ADA) || 0,
 		xrb: parseFloat(req.query.XRB) || 0,
 		aud: parseFloat(req.query.AUD) || 0,
 	};
 	const GET_BTC_AUD_PRICE = new Promise((resolve, reject) => btcm.getTick("BTC", "AUD", (err, data) => err ? reject(err) : resolve(data.lastPrice)));
 	const GET_ETH_AUD_PRICE = new Promise((resolve, reject) => btcm.getTick("ETH", "AUD", (err, data) => err ? reject(err) : resolve(data.lastPrice)));
+	const GET_XRP_AUD_PRICE = new Promise((resolve, reject) => btcm.getTick("XRP", "AUD", (err, data) => err ? reject(err) : resolve(data.lastPrice)));
 	const GET_ALT_PRICES = new Promise((resolve, reject) => binance.prices(ticker => resolve(ticker)));
 	const GET_BITTRAIL_PRICES = bitgrail.getMarkets();
 
-	let BTC_AUD_PRICE, ETH_AUD_PRICE, ADAETH, ADABTC, XRB_BTC_PRICE, XRB_ETH_PRICE;
+	let BTC_AUD_PRICE, ETH_AUD_PRICE, XRP_AUD_PRICE, ADAETH, ADABTC, XRB_BTC_PRICE, XRB_ETH_PRICE;
 	try {
-		[ BTC_AUD_PRICE, ETH_AUD_PRICE, { ADAETH, ADABTC }, { XRB_BTC_PRICE, XRB_ETH_PRICE } ] = await Promise.all([
+		[ BTC_AUD_PRICE, ETH_AUD_PRICE, XRP_AUD_PRICE, { ADAETH, ADABTC }, { XRB_BTC_PRICE, XRB_ETH_PRICE } ] = await Promise.all([
 			GET_BTC_AUD_PRICE,
 			GET_ETH_AUD_PRICE,
+			GET_XRP_AUD_PRICE,
 			GET_ALT_PRICES,
 			GET_BITTRAIL_PRICES,
 			]);
@@ -51,6 +54,9 @@ app.get('/', async (req, res) => {
 	// ETH
 	const eth_value = ETH_AUD_PRICE * coins.eth;
 
+	// XRP
+	const xrp_value = XRP_AUD_PRICE * coins.xrp;
+
 	// XRB 
 	const xrb_value_via_btc = BTC_AUD_PRICE * XRB_BTC_PRICE * coins.xrb;
 	const xrb_value_via_eth = ETH_AUD_PRICE * XRB_ETH_PRICE * coins.xrb;
@@ -63,13 +69,12 @@ app.get('/', async (req, res) => {
 
 	const data = {	
 		DATA_RETRIEVED,
-		TOTAL_PORTFOLIO_VALUE: currencyFormatter.format(btc_value + eth_value + max_ada_value + max_xrb_value, { code: 'AUD' }),
+		TOTAL_PORTFOLIO_VALUE: currencyFormatter.format(btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value, { code: 'AUD' }),
 		PORTFOLIO_DIFF: {
-			value: (coins.aud ? (btc_value + eth_value + max_ada_value + max_xrb_value - coins.aud) / coins.aud : 0) * 100,
+			value: (coins.aud ? (btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value - coins.aud) / coins.aud : 0) * 100,
 		},
 		AUD: {
-			total_coins_raw: coins.aud,
-			total_coins: thousandSep(coins.aud),
+			value: currencyFormatter.format(coins.aud, { code: 'AUD', precision: 2 }),
 		},
 		BITCOIN: {
 			total_coins_raw: coins.btc,
@@ -82,6 +87,12 @@ app.get('/', async (req, res) => {
 			total_coins: thousandSep(coins.eth),
 			market_price_aud: currencyFormatter.format(ETH_AUD_PRICE, { code: 'AUD', precision: 2 }),
 			current_value: currencyFormatter.format(eth_value, { code: 'AUD' }),
+		},
+		RIPPLE: {
+			total_coins_raw: coins.xrp,
+			total_coins: thousandSep(coins.xrp),
+			market_price_aud: currencyFormatter.format(XRP_AUD_PRICE, { code: 'AUD', precision: 2 }),
+			current_value: currencyFormatter.format(xrp_value, { code: 'AUD' }),
 		},
 		RAIBLOCK: {
 			total_coins_raw: coins.xrb,

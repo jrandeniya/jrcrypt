@@ -13,6 +13,7 @@
 					<thead>
 						<tr>
 							<th scope="col">Coin</th>
+							<th scope="col">Ticker</th>
 							<th scope="col">Price Source</th>
 							<th scope="col"># of Coins</th>
 							<th scope="col">Market Price (AUD)</th>
@@ -20,22 +21,33 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr class="<%= BITCOIN.total_coins_raw > 0 ? '' : 'row-no-coins' %>">
 							<td><strong>Bitcoin</strong></td>
+							<td>BTC</td>
 							<td>BTCMarkets</td>
 							<td><%= BITCOIN.total_coins %> <small>BTC</small></td>
 							<td><%= BITCOIN.market_price_aud %><small>/BTC</small></td>
 							<td><%= BITCOIN.current_value %></td>
 						</tr>
-						<tr>
+						<tr class="<%= ETHEREUM.total_coins_raw > 0 ? '' : 'row-no-coins' %>">
 							<td><strong>Ethereum</strong></td>
+							<td>ETH</td>
 							<td>BTCMarkets</td>
 							<td><%= ETHEREUM.total_coins %> <small>ETH</small></td>
 							<td><%= ETHEREUM.market_price_aud %><small>/ETH</small></td>
 							<td><%= ETHEREUM.current_value %></td>
 						</tr>
-						<tr>
+						<tr class="<%= RIPPLE.total_coins_raw > 0 ? '' : 'row-no-coins' %>">
+							<td><strong>Ripple</strong></td>
+							<td>XRP</td>
+							<td>BTCMarkets</td>
+							<td><%= RIPPLE.total_coins %> <small>XRP</small></td>
+							<td><%= RIPPLE.market_price_aud %><small>/XRP</small></td>
+							<td><%= RIPPLE.current_value %></td>
+						</tr>
+						<tr class="<%= RAIBLOCK.total_coins_raw > 0 ? '' : 'row-no-coins' %>">
 							<td><strong>RaiBlock</strong></td>
+							<td>XRB</td>
 							<td>BitGrail</td>
 							<td><%= RAIBLOCK.total_coins %> <small>XRB</small></td>
 							<td>
@@ -44,8 +56,9 @@
 							</td>
 							<td><%= RAIBLOCK.current_value %> <small><%= RAIBLOCK.current_value_via %></small></td>
 						</tr>
-						<tr>
+						<tr class="<%= CARDANO.total_coins_raw > 0 ? '' : 'row-no-coins' %>">
 							<td><strong>Cardano</strong></td>
+							<td>ADA</td>
 							<td>Binance</td>
 							<td><%= CARDANO.total_coins %> <small>ADA</small></td>
 							<td>
@@ -56,10 +69,21 @@
 						</tr>
 					</tbody>
 				</table>
-				<h3 class="display-4 title price text-center">
-					<%= TOTAL_PORTFOLIO_VALUE %>
-					<small class="<%= PORTFOLIO_DIFF.class %>">(<%= PORTFOLIO_DIFF.value %>%)</small>
-				</h3>
+				<div class="text-center">
+					<h4 class="display-5 title price">
+						You started with...
+					</h4>
+					<h3 class="display-4 title price">
+						<%= AUD.value %>
+					</h3>
+					<h4 class="display-5 title price">
+						... but, now you're holding...
+					</h4>
+					<h3 class="display-4 title price">
+						<%= TOTAL_PORTFOLIO_VALUE %>
+						<small class="<%= PORTFOLIO_DIFF.class %>">(<%= PORTFOLIO_DIFF.value %>%)</small>
+					</h3>
+				</div>
 				<hr/>
 				<h5 class="display-5 title text-center">Conversions do not account for transaction fees.</h5>
 				<p class="text-center"><small class="text-muted"><strong>Updated:</strong> <%= DATA_RETRIEVED %></small></p>
