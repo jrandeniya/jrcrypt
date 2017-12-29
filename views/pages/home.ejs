@@ -8,7 +8,7 @@
 	<div class="container">
 		<% include ../partials/header %>
 		<div class="row">
-			<div class="col-sm">
+			<div class="col-sm text-center">
 				<pre class="text-muted">
 					<%= PATH %>/?BTC=<%= BITCOIN.total_coins_raw %>&ADA=<%= CARDANO.total_coins_raw %>&AUD=<%= AUD.total_coins_raw %> 
 				</pre>
@@ -33,6 +33,16 @@
 							<td><%= BITCOIN.total_coins %> <small>BTC</small></td>
 							<td><%= BITCOIN.market_price_aud %><small>/BTC</small></td>
 							<td><%= BITCOIN.current_value %></td>
+						</tr>
+						<tr>
+							<td><strong>RaiBlock</strong></td>
+							<td>BitGrail</td>
+							<td><%= RAIBLOCK.total_coins %> <small>XRB</small></td>
+							<td>
+								<div><%= RAIBLOCK.market_price_aud_via_btc %><small>/XRB (via BTC)</small></div>
+								<div><%= RAIBLOCK.market_price_aud_via_eth %><small>/XRB (via ETH)</small></div>
+							</td>
+							<td><%= RAIBLOCK.current_value %> <small><%= RAIBLOCK.current_value_via %></small></td>
 						</tr>
 						<tr>
 							<td><strong>Cardano</strong></td>
