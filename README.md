@@ -24,5 +24,9 @@ The following APIs are used to retrieved current exchange rates for various coin
 * Visit `http://localhost:8000/?BTC=0.1&ETH=10&XRP=500&XRB=100&ADA=1000&AUD=10000`
 
 ## ToDo
+* Add a graph to show total holdings as a piechart
 * Refactor BTCM/Binance calls into service files
+* Convert API call to stream for prices.
+* Add polling to get prices every 5 seconds for non-streamable API
+* Slack/Chrome notification for price swings?
 * Add transaction fees into calculations
