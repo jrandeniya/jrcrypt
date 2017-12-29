@@ -7,7 +7,7 @@ The following APIs are used to retrieved current exchange rates for various coin
 * Binance (https://www.binance.com/restapipub.html).
 * BitGrail (https://bitgrail.com/api-documentation)
 
-[Heroku Demo](https://jrcrypt.herokuapp.com/?BTC=0.1&ETH=10&XRP=500&XRB=100&ADA=1000&AUD=10000)
+## [Heroku Demo](https://jrcrypt.herokuapp.com/?BTC=0.1&ETH=10&XRP=500&XRB=100&ADA=1000&AUD=10000)
 
 ## URL Paramaters
 * BTC (Float) - total Bitcoin coins
