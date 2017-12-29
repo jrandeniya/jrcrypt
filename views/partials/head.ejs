@@ -1,6 +1,8 @@
 <meta charset="utf-8">
 <title>JRCrypt</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+<script type="text/javascript" src="https://emn178.github.io/Chart.PieceLabel.js/src/Chart.PieceLabel.js"></script>
 <style>
 body {
 	background-color: #ECECEC;
@@ -18,13 +20,15 @@ small.negative {
 	color: red;
 }
 .header {
+	margin: 16px 0;
 	padding-bottom: 10px;
 	border-bottom: 1px dashed #bfbfbf;
 }
-.price {
-	margin: 24px 0;
+.header > small {
+	float: right;
+	font-size: 14px;
 }
-.row-no-coins {
-	background-color: #b37070;
+table.table {
+	margin-top: 2rem;
 }
 </style>

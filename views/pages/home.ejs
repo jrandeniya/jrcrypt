@@ -8,9 +8,31 @@
 	<div class="container">
 		<% include ../partials/header %>
 		<div class="row">
+			<div class="col col-md-4">
+				<canvas id="portfolioChart" width="80" height="80"></canvas>
+			</div>
+			<div class="col col-md-8">
+				<div class="text-right">
+					<p class="title">
+						You started with...
+					</p>
+					<h3 class="display-4 title">
+						<%= AUD.value %>
+					</h3>
+					<p class="title">
+						Now you're hodling...
+					</p>
+					<h3 class="display-4 title">
+						<%= TOTAL_PORTFOLIO_VALUE.value %>
+						<small class="<%= PORTFOLIO_DIFF.class %>">(<%= PORTFOLIO_DIFF.value %>%)</small>
+					</h3>
+				</div>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-sm">
-				<table class="table table-bordered table-dark">
-					<thead>
+				<table class="table table-bordered">
+					<thead class="thead-dark">
 						<tr>
 							<th scope="col">Coin</th>
 							<th scope="col">Ticker</th>
@@ -21,7 +43,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="<%= BITCOIN.total_coins_raw > 0 ? '' : 'row-no-coins' %>">
+						<%if (BITCOIN.total_coins_raw > 0) { %>
+						<tr>
 							<td><strong>Bitcoin</strong></td>
 							<td>BTC</td>
 							<td>BTCMarkets</td>
@@ -29,7 +52,9 @@
 							<td><%= BITCOIN.market_price_aud %><small>/BTC</small></td>
 							<td><%= BITCOIN.current_value %></td>
 						</tr>
-						<tr class="<%= ETHEREUM.total_coins_raw > 0 ? '' : 'row-no-coins' %>">
+						<% } %>
+						<%if (ETHEREUM.total_coins_raw > 0) { %>
+						<tr>
 							<td><strong>Ethereum</strong></td>
 							<td>ETH</td>
 							<td>BTCMarkets</td>
@@ -37,7 +62,9 @@
 							<td><%= ETHEREUM.market_price_aud %><small>/ETH</small></td>
 							<td><%= ETHEREUM.current_value %></td>
 						</tr>
-						<tr class="<%= RIPPLE.total_coins_raw > 0 ? '' : 'row-no-coins' %>">
+						<% } %>
+						<%if (RIPPLE.total_coins_raw > 0) { %>
+						<tr>
 							<td><strong>Ripple</strong></td>
 							<td>XRP</td>
 							<td>BTCMarkets</td>
@@ -45,7 +72,9 @@
 							<td><%= RIPPLE.market_price_aud %><small>/XRP</small></td>
 							<td><%= RIPPLE.current_value %></td>
 						</tr>
-						<tr class="<%= RAIBLOCK.total_coins_raw > 0 ? '' : 'row-no-coins' %>">
+						<% } %>
+						<%if (RAIBLOCK.total_coins_raw > 0) { %>
+						<tr>
 							<td><strong>RaiBlock</strong></td>
 							<td>XRB</td>
 							<td>BitGrail</td>
@@ -56,7 +85,9 @@
 							</td>
 							<td><%= RAIBLOCK.current_value %> <small><%= RAIBLOCK.current_value_via %></small></td>
 						</tr>
-						<tr class="<%= CARDANO.total_coins_raw > 0 ? '' : 'row-no-coins' %>">
+						<% } %>
+						<%if (CARDANO.total_coins_raw > 0) { %>
+						<tr>
 							<td><strong>Cardano</strong></td>
 							<td>ADA</td>
 							<td>Binance</td>
@@ -67,28 +98,44 @@
 							</td>
 							<td><%= CARDANO.current_value %> <small><%= CARDANO.current_value_via %></small></td>
 						</tr>
+						<% } %>
 					</tbody>
 				</table>
-				<div class="text-center">
-					<h4 class="display-5 title price">
-						You started with...
-					</h4>
-					<h3 class="display-4 title price">
-						<%= AUD.value %>
-					</h3>
-					<h4 class="display-5 title price">
-						... but, now you're holding...
-					</h4>
-					<h3 class="display-4 title price">
-						<%= TOTAL_PORTFOLIO_VALUE %>
-						<small class="<%= PORTFOLIO_DIFF.class %>">(<%= PORTFOLIO_DIFF.value %>%)</small>
-					</h3>
-				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm">
 				<hr/>
 				<h5 class="display-5 title text-center">Conversions do not account for transaction fees.</h5>
 				<p class="text-center"><small class="text-muted"><strong>Updated:</strong> <%= DATA_RETRIEVED %></small></p>
 			</div>
 		</div>
 	</div>
+	<script>
+		var ctx = document.getElementById("portfolioChart");
+		new Chart(ctx,{
+			type: 'pie',
+			options: {
+				legend: {
+					display: false,
+				},
+				tooltip: {
+					enabled: false,
+				},
+				pieceLabel: {
+					fontColor: '#fff',
+					overlap: true,
+					render: (data) => `${data.label} ${data.percentage}%`,
+				},
+			},
+			data: {
+				datasets: [{
+					data: <%- JSON.stringify(PIE_CHART.data); %>,
+					backgroundColor:  <%- JSON.stringify(PIE_CHART.colors); %>,
+				}],
+				labels: <%- JSON.stringify(PIE_CHART.labels); %>,
+			}
+		});
+	</script>
 </body>
 </html>
