@@ -63,7 +63,6 @@ app.get('/', async (req, res) => {
 
 	const data = {	
 		DATA_RETRIEVED,
-		PATH: req.protocol + '://' + req.get('host'),
 		TOTAL_PORTFOLIO_VALUE: currencyFormatter.format(btc_value + eth_value + max_ada_value + max_xrb_value, { code: 'AUD' }),
 		PORTFOLIO_DIFF: {
 			value: (coins.aud ? (btc_value + eth_value + max_ada_value + max_xrb_value - coins.aud) / coins.aud : 0) * 100,
