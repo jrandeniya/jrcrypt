@@ -1,4 +1,4 @@
-# jrCrypt
+# JRCrypt
 
 Simple service to return your current crypto-AUD position for Bitcoin (BTC) and Cardano (ADA).
 
@@ -9,7 +9,7 @@ The following APIs are used to retrieved current exchange rates for various coin
 
 [Heroku Demo](https://jrcrypt.herokuapp.com/?BTC=0.1&ETH=10&XRP=500&XRB=100&ADA=1000&AUD=10000)
 
-## URL Paramaters (?BTC=0.1&ETH=10&XRP=500&XRB=100&ADA=1000&AUD=10000)
+## URL Paramaters
 * BTC (Float) - total Bitcoin coins
 * ETH (Float) - total Ethereum coins
 * ADA (Float) - total Cardano coins
