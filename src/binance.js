@@ -9,8 +9,6 @@ const getMarkets = ({ fetchPrice }) => {
 				ADA_ETH_PRICE: 0,
 			});
 		}
-
-		console.log('Making API call to Binance');
 		return binance.prices(ticker => {
 			const { ADABTC, ADAETH } = ticker;
 			return resolve({

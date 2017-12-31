@@ -25,8 +25,8 @@ app.get('/', async (req, res) => {
 		xrb: parseFloat(req.query.XRB) || 0,
 		aud: parseFloat(req.query.AUD) || 0,
 	};
-	const GET_BTC_AUD_PRICE = btcm.getPrice({ tick: 'BTC', fetchPrice: coins.btc + coins.ada + coins.xrb });
-	const GET_ETH_AUD_PRICE = btcm.getPrice({ tick: 'ETH', fetchPrice: coins.eth + coins.ada + coins.xrb });
+	const GET_BTC_AUD_PRICE = btcm.getPrice({ tick: 'BTC', fetchPrice: true });
+	const GET_ETH_AUD_PRICE = btcm.getPrice({ tick: 'ETH', fetchPrice: true });
 	const GET_XRP_AUD_PRICE = btcm.getPrice({ tick: 'XRP', fetchPrice: coins.xrp });
 	const GET_BINANCE_PRICES = binance.getMarkets({ fetchPrice: coins.ada });
 	const GET_BITGRAIL_PRICES = bitgrail.getMarkets({ fetchPrice: coins.xrb });
@@ -57,7 +57,7 @@ app.get('/', async (req, res) => {
 	const max_ada_value = Math.max(ada_value_via_eth, ada_value_via_btc);
 
 	const data = {	
-		DATA_RETRIEVED: new Date(),
+		DATA_RETRIEVED: new Date().toLocaleString(),
 		TOTAL_PORTFOLIO_VALUE: {
 			value_raw: btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value,
 			value: currencyFormatter.format(btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value, { code: 'AUD' })

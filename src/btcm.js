@@ -8,7 +8,6 @@ const getPrice = ({ tick, fetchPrice }) => {
 		if (!fetchPrice) {
 			return resolve(0);
 		}
-		console.log('Making API call to BTCM', tick);
 		return btcm.getTick(tick, 'AUD', (err, data) => err ? reject(err) : resolve(data.lastPrice));
 	});
 }
