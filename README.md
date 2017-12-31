@@ -1,6 +1,6 @@
 # JRCrypt
 
-Simple service to return your current crypto-AUD position for Bitcoin (BTC) and Cardano (ADA).
+Simple app to visualize your current crypto-AUD.
 
 The following APIs are used to retrieved current exchange rates for various coins:
 * BTCMarkets (https://github.com/BTCMarkets/API).
