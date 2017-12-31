@@ -24,6 +24,8 @@ The following APIs are used to retrieved current exchange rates for various coin
 * Visit `http://localhost:8000/?BTC=0.1&XRB=100&ADA=1000&XRP=500&ETH=1&AUD=1000	`
 
 ## ToDo
+* Add Bitcoin Cash
 * If API call errors, exclude from table and include warning message (instead of entire page erroring out)
+* Convert app to client-side only (React?)
 * Convert API call to stream for prices / add polling for non-streamable APIs
 * Add transaction fees into calculations

@@ -43,7 +43,6 @@
 						</tr>
 					</thead>
 					<tbody>
-						<%if (BITCOIN.total_coins_raw > 0) { %>
 						<tr>
 							<td><strong>Bitcoin</strong></td>
 							<td>BTC</td>
@@ -52,7 +51,6 @@
 							<td><%= BITCOIN.market_price_aud %><small>/BTC</small></td>
 							<td><%= BITCOIN.current_value %></td>
 						</tr>
-						<% } %>
 						<%if (ETHEREUM.total_coins_raw > 0) { %>
 						<tr>
 							<td><strong>Ethereum</strong></td>
