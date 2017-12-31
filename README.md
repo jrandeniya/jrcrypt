@@ -24,8 +24,5 @@ The following APIs are used to retrieved current exchange rates for various coin
 * Visit `http://localhost:8000/?BTC=0.1&XRB=100&ADA=1000&XRP=500&ETH=1&AUD=1000	`
 
 ## ToDo
-* Only make API calls to services if there are coins for that currency
-* Only show rows in table if there are coins
-* Refactor BTCM/Binance calls into service files
 * Convert API call to stream for prices / add polling for non-streamable APIs
 * Add transaction fees into calculations

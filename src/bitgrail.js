@@ -1,15 +1,14 @@
 const fetchUrl = require("fetch").fetchUrl;
 
-const getMarkets = ({ XRB }) => {
+const getMarkets = ({ fetchPrice }) => {
 	return new Promise((resolve, reject) => {
-		if (!XRB) {
-			// If no coins in query, don't make API call to BitGrail
+		if (!fetchPrice) {
 			return resolve({
 				XRB_BTC_PRICE: 0,
 				XRB_ETH_PRICE: 0,
 			});
 		}
-
+		console.log('Making API call to Bitgrail');
 		return fetchUrl('https://bitgrail.com/api/v1/markets', (err, meta, response) => {
 			if(err) {
 				return reject(err);
