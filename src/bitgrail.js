@@ -7,12 +7,16 @@ const getMarkets = () => {
 				return reject(err);
 			}
 
-			const { response: { BTC, XRB } } = JSON.parse(response.toString());
+			const responseString = response.toString();
+			if (responseString === 'Website in maintenance') {
+				const error = new Error('Bitgrail is down for maintainence');
+				return reject(error);
+			}
 
+			const { response: { BTC, XRB } } = JSON.parse(responseString);
 			const XRBBTC = BTC.find(pair => pair.market === 'XRB/BTC');
 			const XRBETH = XRB.find(pair => pair.market === 'ETH/XRB');
-			
-			resolve({
+			return resolve({
 				XRB_BTC_PRICE: parseFloat(XRBBTC.bid),
 				XRB_ETH_PRICE: 1/parseFloat(XRBETH.bid),
 			});
