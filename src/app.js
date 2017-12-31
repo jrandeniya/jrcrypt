@@ -29,7 +29,9 @@ app.get('/', async (req, res) => {
 	const GET_ETH_AUD_PRICE = new Promise((resolve, reject) => btcm.getTick("ETH", "AUD", (err, data) => err ? reject(err) : resolve(data.lastPrice)));
 	const GET_XRP_AUD_PRICE = new Promise((resolve, reject) => btcm.getTick("XRP", "AUD", (err, data) => err ? reject(err) : resolve(data.lastPrice)));
 	const GET_ALT_PRICES = new Promise((resolve, reject) => binance.prices(ticker => resolve(ticker)));
-	const GET_BITTRAIL_PRICES = bitgrail.getMarkets();
+	const GET_BITGRAIL_PRICES = bitgrail.getMarkets({
+		XRB: coins.xrb,
+	});
 
 	let BTC_AUD_PRICE, ETH_AUD_PRICE, XRP_AUD_PRICE, ADAETH, ADABTC, XRB_BTC_PRICE, XRB_ETH_PRICE;
 	try {
@@ -38,7 +40,7 @@ app.get('/', async (req, res) => {
 			GET_ETH_AUD_PRICE,
 			GET_XRP_AUD_PRICE,
 			GET_ALT_PRICES,
-			GET_BITTRAIL_PRICES,
+			GET_BITGRAIL_PRICES,
 			]);
 	} catch (e) {
 		return res.render('pages/error', { error: e.message });

@@ -1,7 +1,15 @@
 const fetchUrl = require("fetch").fetchUrl;
 
-const getMarkets = () => {
+const getMarkets = ({ XRB }) => {
 	return new Promise((resolve, reject) => {
+		if (!XRB) {
+			// If no coins in query, don't make API call to BitGrail
+			return resolve({
+				XRB_BTC_PRICE: 0,
+				XRB_ETH_PRICE: 0,
+			});
+		}
+
 		return fetchUrl('https://bitgrail.com/api/v1/markets', (err, meta, response) => {
 			if(err) {
 				return reject(err);
@@ -9,7 +17,7 @@ const getMarkets = () => {
 
 			const responseString = response.toString();
 			if (responseString === 'Website in maintenance') {
-				const error = new Error('Bitgrail is down for maintainence');
+				const error = new Error('Bitgrail (XRB) is down for maintainence');
 				return reject(error);
 			}
 
