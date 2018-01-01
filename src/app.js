@@ -58,7 +58,7 @@ app.get('/', async (req, res) => {
 	const max_ada_value = Math.max(ada_value_via_eth, ada_value_via_btc);
 
 	const data = {	
-		DATA_RETRIEVED: moment().format('Do MMM YYYY, h:mm a'),
+		DATA_RETRIEVED: moment.utc().format(),
 		TOTAL_PORTFOLIO_VALUE: {
 			value_raw: btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value,
 			value: currencyFormatter.format(btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value, { code: 'AUD' })
