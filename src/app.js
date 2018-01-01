@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const favicon = require('serve-favicon');
 const path = require('path');
+const moment = require('moment');
 const currencyFormatter = require('currency-formatter');
 
 const { thousandSep } = require('./helpers');
@@ -57,7 +58,7 @@ app.get('/', async (req, res) => {
 	const max_ada_value = Math.max(ada_value_via_eth, ada_value_via_btc);
 
 	const data = {	
-		DATA_RETRIEVED: new Date().toLocaleString(),
+		DATA_RETRIEVED: moment().format('Do MMM YYYY, h:mm a'),
 		TOTAL_PORTFOLIO_VALUE: {
 			value_raw: btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value,
 			value: currencyFormatter.format(btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value, { code: 'AUD' })

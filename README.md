@@ -26,6 +26,7 @@ The following APIs are used to retrieved current exchange rates for various coin
 ## ToDo
 * Add Bitcoin Cash
 * If API call errors, exclude from table and include warning message (instead of entire page erroring out)
+* Add Google Analytics
 * Convert app to client-side only (React?)
 * Allow coin count / AUD total to be edited (update URL accordingly)
 * Convert API call to stream for prices / add polling for non-streamable APIs
