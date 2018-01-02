@@ -7,13 +7,14 @@ const moment = require('moment');
 const currencyFormatter = require('currency-formatter');
 
 const { thousandSep } = require('./helpers');
-const btcm = require('./btcm');
-const binance = require('./binance');
-const bitgrail = require('./bitgrail');
+const btcm = require('./services/btcm');
+const binance = require('./services/binance');
+const bitgrail = require('./services/bitgrail');
 
 const app = express();
 app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')))
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 const port = process.env.PORT;
 
@@ -60,6 +61,7 @@ app.get('/', async (req, res) => {
 	const data = {	
 		DATA_RETRIEVED: moment.utc().format(),
 		TOTAL_PORTFOLIO_VALUE: {
+			coins: coins.btc + coins.eth + coins.xrp + coins.xrb + coins.ada,
 			value_raw: btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value,
 			value: currencyFormatter.format(btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value, { code: 'AUD' })
 		},

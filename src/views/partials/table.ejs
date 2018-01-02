@@ -1,0 +1,77 @@
+<div class="row">
+	<div class="col-sm">
+		<table class="table table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Coin</th>
+					<th scope="col">Ticker</th>
+					<th scope="col">Price Source</th>
+					<th scope="col"># of Coins</th>
+					<th scope="col">Market Price (AUD)</th>
+					<th scope="col">Current Value (AUD)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%if (BITCOIN.total_coins_raw > 0) { %>
+				<tr>
+					<td><strong>Bitcoin</strong></td>
+					<td>BTC</td>
+					<td>BTCMarkets</td>
+					<td><%= BITCOIN.total_coins %> <small>BTC</small></td>
+					<td><%= BITCOIN.market_price_aud %><small>/BTC</small></td>
+					<td><%= BITCOIN.current_value %></td>
+				</tr>
+				<% } %>
+				<%if (ETHEREUM.total_coins_raw > 0) { %>
+				<tr>
+					<td><strong>Ethereum</strong></td>
+					<td>ETH</td>
+					<td>BTCMarkets</td>
+					<td><%= ETHEREUM.total_coins %> <small>ETH</small></td>
+					<td><%= ETHEREUM.market_price_aud %><small>/ETH</small></td>
+					<td><%= ETHEREUM.current_value %></td>
+				</tr>
+				<% } %>
+				<%if (RIPPLE.total_coins_raw > 0) { %>
+				<tr>
+					<td><strong>Ripple</strong></td>
+					<td>XRP</td>
+					<td>BTCMarkets</td>
+					<td><%= RIPPLE.total_coins %> <small>XRP</small></td>
+					<td><%= RIPPLE.market_price_aud %><small>/XRP</small></td>
+					<td><%= RIPPLE.current_value %></td>
+				</tr>
+				<% } %>
+				<%if (RAIBLOCK.total_coins_raw > 0) { %>
+				<tr>
+					<td><strong>RaiBlock</strong></td>
+					<td>XRB</td>
+					<td>BitGrail</td>
+					<td><%= RAIBLOCK.total_coins %> <small>XRB</small></td>
+					<td>
+						<div><%= RAIBLOCK.market_price_aud_via_btc %><small>/XRB (via BTC)</small></div>
+						<div><%= RAIBLOCK.market_price_aud_via_eth %><small>/XRB (via ETH)</small></div>
+					</td>
+					<td><%= RAIBLOCK.current_value %> <small><%= RAIBLOCK.current_value_via %></small></td>
+				</tr>
+				<% } %>
+				<%if (CARDANO.total_coins_raw > 0) { %>
+				<tr>
+					<td><strong>Cardano</strong></td>
+					<td>ADA</td>
+					<td>Binance</td>
+					<td><%= CARDANO.total_coins %> <small>ADA</small></td>
+					<td>
+						<div><%= CARDANO.market_price_aud_via_btc %><small>/ADA (via BTC)</small></div>
+						<div><%= CARDANO.market_price_aud_via_eth %><small>/ADA (via ETH)</small></div>
+					</td>
+					<td><%= CARDANO.current_value %> <small><%= CARDANO.current_value_via %></small></td>
+				</tr>
+				<% } %>
+			</tbody>
+		</table>
+		<div class="text-center">
+			<small class="title text-muted">Conversions do not account for transaction fees.</small>
+		</div>
+	</div>
+</div>

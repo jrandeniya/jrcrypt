@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% include ../partials/head %>
+</head>
+
+<body>
+	<div class="container">
+		<% include ../partials/header %>
+		<%if (TOTAL_PORTFOLIO_VALUE.coins > 0) { %>
+			<% include ../partials/portfolio %>
+			<% include ../partials/table %>
+		<% } else { %>
+			<% include ../partials/empty %>	
+		<% } %>
+		<% include ../partials/footer %>
+	</div>
+</body>
+</html>

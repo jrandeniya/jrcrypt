@@ -1,0 +1,49 @@
+<div class="row">
+	<div class="col col-md-4">
+		<canvas id="portfolioChart" width="80" height="80"></canvas>
+	</div>
+	<div class="col col-md-8">
+		<div class="text-right">
+			<p class="title">
+				You started with...
+			</p>
+			<h3 class="display-4 title">
+				<%= AUD.value %>
+			</h3>
+			<p class="title">
+				Now you're hodling...
+			</p>
+			<h3 class="display-4 title">
+				<%= TOTAL_PORTFOLIO_VALUE.value %>
+				<small class="<%= PORTFOLIO_DIFF.class %>">(<%= PORTFOLIO_DIFF.value %>%)</small>
+			</h3>
+		</div>
+	</div>
+</div>
+
+<script>
+	var ctx = document.getElementById("portfolioChart");
+	new Chart(ctx,{
+		type: 'pie',
+		options: {
+			legend: {
+				display: false,
+			},
+			tooltip: {
+				enabled: false,
+			},
+			pieceLabel: {
+				fontColor: '#fff',
+				overlap: true,
+				render: (data) => `${data.label} ${data.percentage}%`,
+			},
+		},
+		data: {
+			datasets: [{
+				data: <%- JSON.stringify(PIE_CHART.data); %>,
+				backgroundColor:  <%- JSON.stringify(PIE_CHART.colors); %>,
+			}],
+			labels: <%- JSON.stringify(PIE_CHART.labels); %>,
+		}
+	});
+</script>
