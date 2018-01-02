@@ -7,13 +7,16 @@ The following APIs are used to retrieved current exchange rates for various coin
 * Binance (https://www.binance.com/restapipub.html).
 * BitGrail (https://bitgrail.com/api-documentation)
 
-## [Heroku Demo](https://jrcrypt.herokuapp.com/?BTC=0.1&XRB=100&ADA=1000&XRP=500&ETH=1&AUD=1000	)
+## [Heroku Demo](https://jrcrypt.herokuapp.com/?BTC=0.2&ETH=2&XRP=500&BCH=1&LTC=5&XRB=50&ADA=1000&AUD=7000)
 
 ## URL Paramaters
 * BTC (Float) - total Bitcoin coins
 * ETH (Float) - total Ethereum coins
-* ADA (Float) - total Cardano coins
+* XRP (Float) - total Ripple coins
+* BCH (Float) - total Bitcoin Cash coins
+* LTC (Float) - total Litecoin coins
 * XRB (Float) - total RaiBlock coins
+* ADA (Float) - total Cardano coins
 * AUD (Float) - total AUD investment to gauge +/- %
 
 ## Development
@@ -21,11 +24,9 @@ The following APIs are used to retrieved current exchange rates for various coin
 * Update `.env` with an available local PORT.
 * `npm install` 
 * `npm run dev`
-* Visit `http://localhost:8000/?BTC=0.1&XRB=100&ADA=1000&XRP=500&ETH=1&AUD=1000	`
+* Visit `http://localhost:8000/?BTC=0.2&ETH=2&XRP=500&BCH=1&LTC=5&XRB=50&ADA=1000&AUD=7000`
 
 ## ToDo
-* Add Bitcoin Cash and LiteCoin
-* If no coins are provided, show empty state instead of just BTC and ETH.
 * Add Google Analytics
 * If API call errors, exclude from table and include warning message (instead of entire page erroring out)
 * Convert app to client-side only (React?)

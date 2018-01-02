@@ -21,6 +21,8 @@ const port = process.env.PORT;
 app.get('/', async (req, res) => {
 	const coins = {
 		btc: parseFloat(req.query.BTC) || 0,
+		bch: parseFloat(req.query.BCH) || 0,
+		ltc: parseFloat(req.query.LTC) || 0,
 		eth: parseFloat(req.query.ETH) || 0,
 		xrp: parseFloat(req.query.XRP) || 0,
 		ada: parseFloat(req.query.ADA) || 0,
@@ -30,14 +32,24 @@ app.get('/', async (req, res) => {
 	const GET_BTC_AUD_PRICE = btcm.getPrice({ tick: 'BTC', fetchPrice: true });
 	const GET_ETH_AUD_PRICE = btcm.getPrice({ tick: 'ETH', fetchPrice: true });
 	const GET_XRP_AUD_PRICE = btcm.getPrice({ tick: 'XRP', fetchPrice: coins.xrp });
+	const GET_BCH_AUD_PRICE = btcm.getPrice({ tick: 'BCH', fetchPrice: coins.bch });
+	const GET_LTC_AUD_PRICE = btcm.getPrice({ tick: 'LTC', fetchPrice: coins.ltc });
 	const GET_BINANCE_PRICES = binance.getMarkets({ fetchPrice: coins.ada });
 	const GET_BITGRAIL_PRICES = bitgrail.getMarkets({ fetchPrice: coins.xrb });
 
-	let BTC_AUD_PRICE, ETH_AUD_PRICE, XRP_AUD_PRICE, ADA_BTC_PRICE, ADA_ETH_PRICE, XRB_BTC_PRICE, XRB_ETH_PRICE;
+	let BTC_AUD_PRICE, ETH_AUD_PRICE, BCH_AUD_PRICE, LTC_AUD_PRICE, XRP_AUD_PRICE, ADA_BTC_PRICE, ADA_ETH_PRICE, XRB_BTC_PRICE, XRB_ETH_PRICE;
 	try {
-		[ BTC_AUD_PRICE, ETH_AUD_PRICE, XRP_AUD_PRICE, { ADA_BTC_PRICE, ADA_ETH_PRICE }, { XRB_BTC_PRICE, XRB_ETH_PRICE } ] = await Promise.all([
+		[ BTC_AUD_PRICE,
+		ETH_AUD_PRICE,
+		BCH_AUD_PRICE,
+		LTC_AUD_PRICE,
+		XRP_AUD_PRICE,
+		{ ADA_BTC_PRICE, ADA_ETH_PRICE },
+		{ XRB_BTC_PRICE, XRB_ETH_PRICE } ] = await Promise.all([
 			GET_BTC_AUD_PRICE,
 			GET_ETH_AUD_PRICE,
+			GET_BCH_AUD_PRICE,
+			GET_LTC_AUD_PRICE,
 			GET_XRP_AUD_PRICE,
 			GET_BINANCE_PRICES,
 			GET_BITGRAIL_PRICES,
@@ -48,6 +60,8 @@ app.get('/', async (req, res) => {
 
 	const btc_value = BTC_AUD_PRICE * coins.btc;
 	const eth_value = ETH_AUD_PRICE * coins.eth;
+	const bch_value = BCH_AUD_PRICE * coins.bch;
+	const ltc_value = LTC_AUD_PRICE * coins.ltc;
 	const xrp_value = XRP_AUD_PRICE * coins.xrp;
 
 	const xrb_value_via_btc = BTC_AUD_PRICE * XRB_BTC_PRICE * coins.xrb;
@@ -61,12 +75,12 @@ app.get('/', async (req, res) => {
 	const data = {	
 		DATA_RETRIEVED: moment.utc().format(),
 		TOTAL_PORTFOLIO_VALUE: {
-			coins: coins.btc + coins.eth + coins.xrp + coins.xrb + coins.ada,
-			value_raw: btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value,
-			value: currencyFormatter.format(btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value, { code: 'AUD' })
+			coins: coins.btc + coins.eth + coins.bch + coins.ltc + coins.xrp + coins.xrb + coins.ada,
+			value_raw: btc_value + eth_value + bch_value + ltc_value + xrp_value + max_ada_value + max_xrb_value,
+			value: currencyFormatter.format(btc_value + eth_value + bch_value + ltc_value + xrp_value + max_ada_value + max_xrb_value, { code: 'AUD' })
 		},
 		PORTFOLIO_DIFF: {
-			value: (coins.aud ? (btc_value + eth_value + xrp_value + max_ada_value + max_xrb_value - coins.aud) / coins.aud : 0) * 100,
+			value: (coins.aud ? (btc_value + eth_value + bch_value + ltc_value + xrp_value + max_ada_value + max_xrb_value - coins.aud) / coins.aud : 0) * 100,
 		},
 		AUD: {
 			value: currencyFormatter.format(coins.aud, { code: 'AUD', precision: 2 }),
@@ -82,6 +96,18 @@ app.get('/', async (req, res) => {
 			total_coins: thousandSep(coins.eth),
 			market_price_aud: currencyFormatter.format(ETH_AUD_PRICE, { code: 'AUD', precision: 2 }),
 			current_value: currencyFormatter.format(eth_value, { code: 'AUD' }),
+		},
+		BITCOIN_CASH: {
+			total_coins_raw: coins.bch,
+			total_coins: thousandSep(coins.bch),
+			market_price_aud: currencyFormatter.format(BCH_AUD_PRICE, { code: 'AUD', precision: 2 }),
+			current_value: currencyFormatter.format(bch_value, { code: 'AUD' }),
+		},
+		LITECOIN: {
+			total_coins_raw: coins.ltc,
+			total_coins: thousandSep(coins.ltc),
+			market_price_aud: currencyFormatter.format(LTC_AUD_PRICE, { code: 'AUD', precision: 2 }),
+			current_value: currencyFormatter.format(ltc_value, { code: 'AUD' }),
 		},
 		RIPPLE: {
 			total_coins_raw: coins.xrp,
@@ -126,6 +152,16 @@ app.get('/', async (req, res) => {
 		data.PIE_CHART.data.push((eth_value / data.TOTAL_PORTFOLIO_VALUE.value_raw).toFixed(2));
 		data.PIE_CHART.labels.push('ETH');
 		data.PIE_CHART.colors.push('#000000');
+	}
+	if (coins.bch) {
+		data.PIE_CHART.data.push((bch_value / data.TOTAL_PORTFOLIO_VALUE.value_raw).toFixed(2));
+		data.PIE_CHART.labels.push('BCH');
+		data.PIE_CHART.colors.push('#ca6e00');
+	}
+	if (coins.ltc) {
+		data.PIE_CHART.data.push((ltc_value / data.TOTAL_PORTFOLIO_VALUE.value_raw).toFixed(2));
+		data.PIE_CHART.labels.push('LTC');
+		data.PIE_CHART.colors.push('#b8b8b8');
 	}
 	if (coins.xrp) {
 		data.PIE_CHART.data.push((xrp_value / data.TOTAL_PORTFOLIO_VALUE.value_raw).toFixed(2));

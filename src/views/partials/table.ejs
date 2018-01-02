@@ -42,6 +42,26 @@
 					<td><%= RIPPLE.current_value %></td>
 				</tr>
 				<% } %>
+				<%if (BITCOIN_CASH.total_coins_raw > 0) { %>
+				<tr>
+					<td><strong>Bitcoin Cash</strong></td>
+					<td>BCH</td>
+					<td>BTCMarkets</td>
+					<td><%= BITCOIN_CASH.total_coins %> <small>BCH</small></td>
+					<td><%= BITCOIN_CASH.market_price_aud %><small>/BCH</small></td>
+					<td><%= BITCOIN_CASH.current_value %></td>
+				</tr>
+				<% } %>
+				<%if (LITECOIN.total_coins_raw > 0) { %>
+				<tr>
+					<td><strong>Litecoin</strong></td>
+					<td>LTC</td>
+					<td>BTCMarkets</td>
+					<td><%= LITECOIN.total_coins %> <small>LTC</small></td>
+					<td><%= LITECOIN.market_price_aud %><small>/LTC</small></td>
+					<td><%= LITECOIN.current_value %></td>
+				</tr>
+				<% } %>
 				<%if (RAIBLOCK.total_coins_raw > 0) { %>
 				<tr>
 					<td><strong>RaiBlock</strong></td>
