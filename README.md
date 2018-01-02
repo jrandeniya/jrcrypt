@@ -1,6 +1,6 @@
 # JRCrypt
 
-Simple app to visualize your current crypto-AUD.
+Simple app to visualize your current crypto-AUD position.
 
 The following APIs are used to retrieved current exchange rates for various coins:
 * BTCMarkets (https://github.com/BTCMarkets/API).
