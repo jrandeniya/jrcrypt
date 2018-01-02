@@ -21,7 +21,7 @@ The following APIs are used to retrieved current exchange rates for various coin
 
 ## Development
 * Rename `.env.sample` to `.env`
-* Update `.env` with an available local PORT.
+* Update `.env` with an available local PORT (eg: 8000).
 * `npm install` 
 * `npm run dev`
 * Visit `http://localhost:8000/?BTC=0.2&ETH=2&XRP=500&BCH=1&LTC=5&XRB=50&ADA=1000&AUD=7000`

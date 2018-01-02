@@ -73,6 +73,7 @@ app.get('/', async (req, res) => {
 	const max_ada_value = Math.max(ada_value_via_eth, ada_value_via_btc);
 
 	const data = {	
+		GA: process.env.GA,
 		DATA_RETRIEVED: moment.utc().format(),
 		TOTAL_PORTFOLIO_VALUE: {
 			coins: coins.btc + coins.eth + coins.bch + coins.ltc + coins.xrp + coins.xrb + coins.ada,
