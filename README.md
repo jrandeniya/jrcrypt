@@ -1,4 +1,4 @@
-# JRCrypt
+# jrCrypt
 
 Simple app to visualize your current crypto-AUD position.
 
