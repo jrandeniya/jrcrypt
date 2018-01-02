@@ -27,9 +27,7 @@ The following APIs are used to retrieved current exchange rates for various coin
 * Visit `http://localhost:8000/?BTC=0.2&ETH=2&XRP=500&BCH=1&LTC=5&XRB=50&ADA=1000&AUD=7000`
 
 ## ToDo
-* Add Google Analytics
-* If API call errors, exclude from table and include warning message (instead of entire page erroring out)
 * Convert app to client-side only (React?)
-* Allow coin count / AUD total to be edited (update URL accordingly)
-* Convert API call to stream for prices / add polling for non-streamable APIs
+* Allow coin count / AUD total to be added / edited via UI
+* Add custom Conversion Routing
 * Add transaction fees into calculations
