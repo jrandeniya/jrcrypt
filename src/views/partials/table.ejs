@@ -88,6 +88,32 @@
 					<td><%= CARDANO.current_value %> <small><%= CARDANO.current_value_via %></small></td>
 				</tr>
 				<% } %>
+				<%if (REQUEST_NETWORK.total_coins_raw > 0) { %>
+				<tr>
+					<td><strong>Request Network</strong></td>
+					<td>REQ</td>
+					<td>Binance</td>
+					<td><%= REQUEST_NETWORK.total_coins %> <small>REQ</small></td>
+					<td>
+						<div><%= REQUEST_NETWORK.market_price_aud_via_btc %><small>/REQ (via BTC)</small></div>
+						<div><%= REQUEST_NETWORK.market_price_aud_via_eth %><small>/REQ (via ETH)</small></div>
+					</td>
+					<td><%= REQUEST_NETWORK.current_value %> <small><%= REQUEST_NETWORK.current_value_via %></small></td>
+				</tr>
+				<% } %>
+				<%if (IOTA.total_coins_raw > 0) { %>
+				<tr>
+					<td><strong>IOTA</strong></td>
+					<td>IOTA</td>
+					<td>Binance</td>
+					<td><%= IOTA.total_coins %> <small>IOTA</small></td>
+					<td>
+						<div><%= IOTA.market_price_aud_via_btc %><small>/IOTA (via BTC)</small></div>
+						<div><%= IOTA.market_price_aud_via_eth %><small>/IOTA (via ETH)</small></div>
+					</td>
+					<td><%= IOTA.current_value %> <small><%= IOTA.current_value_via %></small></td>
+				</tr>
+				<% } %>
 			</tbody>
 		</table>
 		<div class="text-center">

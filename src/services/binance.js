@@ -7,14 +7,22 @@ const getMarkets = ({ fetchPrice }) => {
 			return resolve({
 				ADA_BTC_PRICE: 0,
 				ADA_ETH_PRICE: 0,
+				REQ_BTC_PRICE: 0,
+				REQ_ETH_PRICE: 0,
+				IOTA_BTC_PRICE: 0,
+				IOTA_ETH_PRICE: 0,
 			});
 		}
 		return binance.prices(ticker => {
-			const { ADABTC, ADAETH } = ticker;
+			const { ADABTC, ADAETH, REQBTC, REQETH, IOTABTC, IOTAETH } = ticker;
 			return resolve({
 				ADA_BTC_PRICE: parseFloat(ADABTC),
 				ADA_ETH_PRICE: parseFloat(ADAETH),
-			})
+				REQ_BTC_PRICE: parseFloat(REQBTC),
+				REQ_ETH_PRICE: parseFloat(REQETH),
+				IOTA_BTC_PRICE: parseFloat(IOTABTC),
+				IOTA_ETH_PRICE: parseFloat(IOTAETH),
+			});
 		});
 	});
 }
