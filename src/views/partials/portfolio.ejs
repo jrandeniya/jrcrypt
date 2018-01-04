@@ -4,14 +4,15 @@
 	</div>
 	<div class="col col-md-8">
 		<div class="text-right">
-			<p class="title">
-				You started with...
+			<p class="lead">
+				You invested:
 			</p>
 			<h3 class="display-4 title">
 				<%= AUD.value %>
 			</h3>
-			<p class="title">
-				Now you're hodling...
+			<hr>
+			<p class="lead">
+				You're now <em>hodling</em>:
 			</p>
 			<h3 class="display-4 title">
 				<%= TOTAL_PORTFOLIO_VALUE.value %>
@@ -29,13 +30,17 @@
 			legend: {
 				display: false,
 			},
-			tooltip: {
-				enabled: false,
+			tooltips: {
+				callbacks: {
+					label: (tooltipItem, { datasets, labels }) => { 
+						return ` ${labels[tooltipItem.index]}: ${(parseFloat(datasets[0].data[tooltipItem.index]) * 100).toFixed(2)}%`
+					},
+				},
 			},
 			pieceLabel: {
 				fontColor: '#fff',
 				overlap: true,
-				render: (data) => `${data.label} ${data.percentage}%`,
+				render: (data) => `${data.label}`,
 			},
 		},
 		data: {
