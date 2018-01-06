@@ -7,16 +7,14 @@ The following APIs are used to retrieved current exchange rates for various coin
 * Binance (https://www.binance.com/restapipub.html).
 * BitGrail (https://bitgrail.com/api-documentation)
 
-## Supported Coins:
-* The following virtual currencies are currently supported: **BTC, ETH, XRP, BCH, LTC, XRB, REQ, IOTA, ADA and XLM**
-* The following fiat currencies are currently supported: **AUD**
-
 ### Demos
 You can construct the URL depending on your portfolio holdings. To add multiple coins, just separate the ticker with an ampersand (`&`). For example:
 
 * If you have 0.5BTC and 2ETH: https://jrcrypt.herokuapp.com/?BTC=0.5&ETH=2
 * If you have 0.3BTC, 5LTC and invested AUD $1000: https://jrcrypt.herokuapp.com/?BTC=0.3&LTC=5&AUD=1000
-* View app with all supported coins: [Demo](https://jrcrypt.herokuapp.com/?BTC=0.1&ETH=1&XRP=100&BCH=0.5&LTC=2&XRB=25&REQ=1000&IOTA=250ADA=500&XLM=500&AUD=10000)
+* [Full Demo](https://jrcrypt.herokuapp.com/?BTC=0.1&ETH=1&XRP=100&BCH=0.5&LTC=2&XRB=25&REQ=1000&IOTA=250ADA=500&XLM=500&AUD=10000)
+
+App currently supports: **BTC, ETH, XRP, BCH, LTC, XRB, REQ, IOTA, ADA** and **XLM**
 
 ## Development
 * Rename `.env.sample` to `.env`
