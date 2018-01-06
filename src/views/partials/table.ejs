@@ -114,6 +114,32 @@
 					<td><%= IOTA.current_value %> <small><%= IOTA.current_value_via %></small></td>
 				</tr>
 				<% } %>
+				<%if (STELLAR.total_coins_raw > 0) { %>
+				<tr>
+					<td><strong>Stellar</strong></td>
+					<td>XLM</td>
+					<td>Binance</td>
+					<td><%= STELLAR.total_coins %> <small>XLM</small></td>
+					<td>
+						<div><%= STELLAR.market_price_aud_via_btc %><small>/XLM (via BTC)</small></div>
+						<div><%= STELLAR.market_price_aud_via_eth %><small>/XLM (via ETH)</small></div>
+					</td>
+					<td><%= STELLAR.current_value %> <small><%= STELLAR.current_value_via %></small></td>
+				</tr>
+				<% } %>
+				<%if (NEM.total_coins_raw > 0) { %>
+				<tr>
+					<td><strong>NEM</strong></td>
+					<td>XEM</td>
+					<td>Binance</td>
+					<td><%= NEM.total_coins %> <small>XEM</small></td>
+					<td>
+						<div><%= NEM.market_price_aud_via_btc %><small>/XEM (via BTC)</small></div>
+						<div><%= NEM.market_price_aud_via_eth %><small>/XEM (via ETH)</small></div>
+					</td>
+					<td><%= NEM.current_value %> <small><%= NEM.current_value_via %></small></td>
+				</tr>
+				<% } %>
 			</tbody>
 		</table>
 		<div class="text-center">

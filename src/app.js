@@ -29,6 +29,8 @@ app.get('/', async (req, res) => {
 		xrb: parseFloat(req.query.XRB) || 0,
 		req: parseFloat(req.query.REQ) || 0,
 		iota: parseFloat(req.query.IOTA) || 0,
+		xlm: parseFloat(req.query.XLM) || 0,
+		xem: 0, // WIP
 		aud: parseFloat(req.query.AUD) || 0,
 	};
 	const GET_BTC_AUD_PRICE = btcm.getPrice({ tick: 'BTC', fetchPrice: true });
@@ -36,22 +38,26 @@ app.get('/', async (req, res) => {
 	const GET_XRP_AUD_PRICE = btcm.getPrice({ tick: 'XRP', fetchPrice: coins.xrp });
 	const GET_BCH_AUD_PRICE = btcm.getPrice({ tick: 'BCH', fetchPrice: coins.bch });
 	const GET_LTC_AUD_PRICE = btcm.getPrice({ tick: 'LTC', fetchPrice: coins.ltc });
-	const GET_BINANCE_PRICES = binance.getMarkets({ fetchPrice: coins.ada + coins.req + coins.iota });
+	const GET_BINANCE_PRICES = binance.getMarkets({ fetchPrice: coins.ada + coins.req + coins.iota + coins.xlm });
 	const GET_BITGRAIL_PRICES = bitgrail.getMarkets({ fetchPrice: coins.xrb });
 
 	let BTC_AUD_PRICE,
-	 ETH_AUD_PRICE,
-	 BCH_AUD_PRICE,
-	 LTC_AUD_PRICE,
-	 XRP_AUD_PRICE,
-	 ADA_BTC_PRICE,
-	 ADA_ETH_PRICE,
-	 REQ_BTC_PRICE,
-	 REQ_ETH_PRICE,
-	 IOTA_BTC_PRICE,
-	 IOTA_ETH_PRICE,
-	 XRB_BTC_PRICE,
-	 XRB_ETH_PRICE;
+	ETH_AUD_PRICE,
+	BCH_AUD_PRICE,
+	LTC_AUD_PRICE,
+	XRP_AUD_PRICE,
+	ADA_BTC_PRICE,
+	ADA_ETH_PRICE,
+	REQ_BTC_PRICE,
+	REQ_ETH_PRICE,
+	IOTA_BTC_PRICE,
+	IOTA_ETH_PRICE,
+	XLM_BTC_PRICE,
+	XLM_ETH_PRICE,
+	XEM_BTC_PRICE = 0,
+	XEM_ETH_PRICE = 0,
+	XRB_BTC_PRICE,
+	XRB_ETH_PRICE;
 
 	try {
 		[ BTC_AUD_PRICE,
@@ -59,7 +65,7 @@ app.get('/', async (req, res) => {
 		BCH_AUD_PRICE,
 		LTC_AUD_PRICE,
 		XRP_AUD_PRICE,
-		{ ADA_BTC_PRICE, ADA_ETH_PRICE, REQ_BTC_PRICE, REQ_ETH_PRICE, IOTA_BTC_PRICE, IOTA_ETH_PRICE },
+		{ ADA_BTC_PRICE, ADA_ETH_PRICE, REQ_BTC_PRICE, REQ_ETH_PRICE, IOTA_BTC_PRICE, IOTA_ETH_PRICE, XLM_BTC_PRICE, XLM_ETH_PRICE },
 		{ XRB_BTC_PRICE, XRB_ETH_PRICE } ] = await Promise.all([
 			GET_BTC_AUD_PRICE,
 			GET_ETH_AUD_PRICE,
@@ -91,20 +97,31 @@ app.get('/', async (req, res) => {
 	const iota_value_via_eth = ETH_AUD_PRICE * IOTA_ETH_PRICE * coins.iota;
 	const max_iota_value = Math.max(iota_value_via_eth, iota_value_via_btc);
 
+	const xlm_value_via_btc = BTC_AUD_PRICE * XLM_BTC_PRICE * coins.xlm;
+	const xlm_value_via_eth = ETH_AUD_PRICE * XLM_ETH_PRICE * coins.xlm;
+	const max_xlm_value = Math.max(xlm_value_via_eth, xlm_value_via_btc);
+
+	const xem_value_via_btc = BTC_AUD_PRICE * XEM_BTC_PRICE * coins.xem;
+	const xem_value_via_eth = ETH_AUD_PRICE * XEM_ETH_PRICE * coins.xem;
+	const max_xem_value = Math.max(xem_value_via_eth, xem_value_via_btc);
+
 	const ada_value_via_btc = BTC_AUD_PRICE * ADA_BTC_PRICE * coins.ada;
 	const ada_value_via_eth = ETH_AUD_PRICE * ADA_ETH_PRICE * coins.ada;
 	const max_ada_value = Math.max(ada_value_via_eth, ada_value_via_btc);
+
+	const total_value = btc_value + eth_value + bch_value + ltc_value + xrp_value + max_req_value + max_iota_value + max_ada_value + max_xrb_value + max_xlm_value + max_xem_value;
+	const total_coins = coins.btc + coins.eth + coins.bch + coins.ltc + coins.xrp + coins.req + coins.iota + coins.xrb + coins.ada + coins.xlm + coins.xem;
 
 	const data = {	
 		GA: process.env.GA,
 		DATA_RETRIEVED: moment.utc().format(),
 		TOTAL_PORTFOLIO_VALUE: {
-			coins: coins.btc + coins.eth + coins.bch + coins.ltc + coins.xrp + coins.req + coins.iota + coins.xrb + coins.ada,
-			value_raw: btc_value + eth_value + bch_value + ltc_value + xrp_value + max_req_value + max_iota_value + max_ada_value + max_xrb_value,
-			value: currencyFormatter.format(btc_value + eth_value + bch_value + ltc_value + xrp_value + max_req_value + max_iota_value + max_ada_value + max_xrb_value, { code: 'AUD' })
+			coins: total_coins,
+			value_raw: total_value,
+			value: currencyFormatter.format(total_value, { code: 'AUD' })
 		},
 		PORTFOLIO_DIFF: {
-			value: (coins.aud ? (btc_value + eth_value + bch_value + ltc_value + xrp_value + max_req_value + max_iota_value + max_ada_value + max_xrb_value - coins.aud) / coins.aud : 0) * 100,
+			value: (coins.aud ? (total_value - coins.aud) / coins.aud : 0) * 100,
 		},
 		AUD: {
 			value: currencyFormatter.format(coins.aud, { code: 'AUD', precision: 2 }),
@@ -171,6 +188,22 @@ app.get('/', async (req, res) => {
 			current_value: currencyFormatter.format(max_ada_value, { code: 'AUD' }),
 			current_value_via: ada_value_via_eth >= ada_value_via_btc ? '(via ETH)' : '(via BTC)',
 		},
+		STELLAR: {
+			total_coins_raw: coins.xlm,
+			total_coins: thousandSep(coins.xlm),
+			market_price_aud_via_btc: currencyFormatter.format(BTC_AUD_PRICE * XLM_BTC_PRICE, { code: 'AUD', precision: 2 }),
+			market_price_aud_via_eth: currencyFormatter.format(ETH_AUD_PRICE * XLM_ETH_PRICE, { code: 'AUD', precision: 2 }),
+			current_value: currencyFormatter.format(max_xlm_value, { code: 'AUD' }),
+			current_value_via: xlm_value_via_eth >= xlm_value_via_btc ? '(via ETH)' : '(via BTC)',
+		},
+		NEM: {
+			total_coins_raw: coins.xem,
+			total_coins: thousandSep(coins.xem),
+			market_price_aud_via_btc: currencyFormatter.format(BTC_AUD_PRICE * XEM_BTC_PRICE, { code: 'AUD', precision: 2 }),
+			market_price_aud_via_eth: currencyFormatter.format(ETH_AUD_PRICE * XEM_ETH_PRICE, { code: 'AUD', precision: 2 }),
+			current_value: currencyFormatter.format(max_xem_value, { code: 'AUD' }),
+			current_value_via: xem_value_via_eth >= xem_value_via_btc ? '(via ETH)' : '(via BTC)',
+		},
 	};
 
 	// Overal Portfolio 
@@ -227,6 +260,16 @@ app.get('/', async (req, res) => {
 		data.PIE_CHART.data.push((max_ada_value / data.TOTAL_PORTFOLIO_VALUE.value_raw));
 		data.PIE_CHART.labels.push('ADA');
 		data.PIE_CHART.colors.push('#377fe3');
+	}
+	if (coins.xlm) {
+		data.PIE_CHART.data.push((max_xlm_value / data.TOTAL_PORTFOLIO_VALUE.value_raw));
+		data.PIE_CHART.labels.push('XLM');
+		data.PIE_CHART.colors.push('#5f6f78');
+	}
+	if (coins.xem) {
+		data.PIE_CHART.data.push((max_xem_value / data.TOTAL_PORTFOLIO_VALUE.value_raw));
+		data.PIE_CHART.labels.push('XEM');
+		data.PIE_CHART.colors.push('#2cbaad');
 	}
 	return res.render('pages/home', data);
 });
