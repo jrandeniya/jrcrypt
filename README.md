@@ -12,10 +12,10 @@ The following APIs are used to retrieved current exchange rates for various coin
 * The following fiat currencies are currently supported: **AUD**
 
 ### Demos
-You can construct the URL depending on your portfolio holdings. Just separate the ticker with an ampersand (`&amp;`) For example:
+You can construct the URL depending on your portfolio holdings. To add multiple coins, just separate the ticker with an ampersand (`&`). For example:
 
-* If you have 1BTC, 10ETH: https://jrcrypt.herokuapp.com/?BTC=1&ETH=10
-* If you have 1BTC, 300XRP and invested AUD $1000: https://jrcrypt.herokuapp.com/?BTC=1&XRP=300&AUD=1000
+* If you have 0.5BTC and 2ETH: https://jrcrypt.herokuapp.com/?BTC=0.5&ETH=2
+* If you have 0.3BTC, 5LTC and invested AUD $1000: https://jrcrypt.herokuapp.com/?BTC=0.3&LTC=5&AUD=1000
 * View app with all supported coins: [Demo](https://jrcrypt.herokuapp.com/?BTC=0.1&ETH=1&XRP=100&BCH=0.5&LTC=2&XRB=25&REQ=1000&IOTA=250ADA=500&XLM=500&AUD=10000)
 
 ## Development
