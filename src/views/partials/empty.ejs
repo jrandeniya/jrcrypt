@@ -2,8 +2,14 @@
 	<div class="col-sm">
 		<div>
 			<p><strong>What is it?</strong> A simple visualize of your current AUD($) position if you were to liquidate your coins today. It uses the current conversion rates on popular exchanges such as BTCMarkets, Binance and Bitgrail to work out the AUD($) value of each of your holdings.</p>
-			<p><strong>How to use it?</strong> Change the values in the URL below to match your portfolio and remove any coins you do not hold. Then, press enter!</p>
-			<p><strong>URL: </strong><code>https://jrcrypt.herokuapp.com/?BTC=0.1&amp;ETH=1&amp;XRP=100&amp;BCH=0.5&amp;LTC=2&amp;XRB=25&amp;REQ=1000&amp;IOTA=250ADA=500&amp;AUD=5000</code></p>
+			<p><strong>How to use it?</strong> You need to construct the URL depending on your portfolio holdings. To add multiple coins, just separate the ticker with an ampersand (<code>&amp;</code>). For example:</p>
+			<ul>
+				<li>If you have 0.5BTC and 2ETH: <code>https://jrcrypt.herokuapp.com/?BTC=0.5&amp;ETH=2</code></li>
+				<li>If you have 0.3BTC, 5LTC and put in $1000: <code>https://jrcrypt.herokuapp.com/?BTC=0.3&amp;LTC=5&amp;AUD=1000</code></li>
+				<li>If you have 100ADA, 50XLM, 10XRB and put in $500: <code>https://jrcrypt.herokuapp.com/?ADA=100&amp;XLM=50&amp;XRB=10&amp;AUD=500</code></li>
+			</ul>
+			<p>App currently supports: <strong>BTC, ETH, XRP, BCH, LTC, XRB, REQ, IOTA, ADA</strong> and <strong>XLM</strong></p>
+			<p>Once you have the URL configured, you can bookmark it so it can be visited directly and quickly. <em>Happy Hodling!</em></p>
 		</div>
 	</div>
 </div>
