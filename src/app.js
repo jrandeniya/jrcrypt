@@ -38,7 +38,7 @@ app.get('/', async (req, res) => {
 	const GET_XRP_AUD_PRICE = btcm.getPrice({ tick: 'XRP', fetchPrice: coins.xrp });
 	const GET_BCH_AUD_PRICE = btcm.getPrice({ tick: 'BCH', fetchPrice: coins.bch });
 	const GET_LTC_AUD_PRICE = btcm.getPrice({ tick: 'LTC', fetchPrice: coins.ltc });
-	const GET_BINANCE_PRICES = binance.getMarkets({ fetchPrice: coins.ada + coins.req + coins.iota + coins.xlm + coins.xem });
+	const GET_BINANCE_PRICES = binance.getMarkets({ fetchPrice: coins.ada + coins.req + coins.iota + coins.xlm });
 	const GET_BITGRAIL_PRICES = bitgrail.getMarkets({ fetchPrice: coins.xrb });
 
 	let BTC_AUD_PRICE,
