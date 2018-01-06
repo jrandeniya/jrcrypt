@@ -26,7 +26,7 @@ You can construct the URL depending on your profile. For example:
 * Visit `http://localhost:8000/?BTC=0.1&ETH=1&XRP=100&BCH=0.5&LTC=2&XRB=25&REQ=1000&IOTA=250ADA=500&XLM=500&XEM=200&AUD=5000`
 
 ## ToDo
+* Add NEM (XEM) support
 * Convert app to client-side only (React?)
-* Allow coin count / AUD total to be added / edited via UI
 * Add custom Conversion Routing
 * Add transaction fees into calculations
