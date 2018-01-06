@@ -8,22 +8,22 @@ The following APIs are used to retrieved current exchange rates for various coin
 * BitGrail (https://bitgrail.com/api-documentation)
 
 ## Supported Coins:
-The following virtual currencies are currently supported: **BTC, ETH, XRP, BCH, LTC, XRB, REQ, IOTA, ADA, XLM and XEM.**
+The following virtual currencies are currently supported: **BTC, ETH, XRP, BCH, LTC, XRB, REQ, IOTA, ADA and XLM**
+
 The following fiat currencies are currently supported: **AUD**
 
 ### Demos
 You can construct the URL depending on your profile. For example:
 * If you have 1BTC, 10ETH: https://jrcrypt.herokuapp.com/?BTC=1&ETH=10
-* If you have 1BTC, 300XRP and invested AUD $1000: https://jrcrypt.herokuapp.com/?BTC=1&XRP=300&AUD=
-* If you have 1000ADA, 400XEM, 100IOTA and invested AUD $500: https://jrcrypt.herokuapp.com/?ADA=1000&XEM=400&IOTA=100&AUD=500
-* If you have all the coins supported by this app: https://jrcrypt.herokuapp.com/?BTC=0.1&ETH=1&XRP=100&BCH=0.5&LTC=2&XRB=25&REQ=1000&IOTA=250ADA=500&XLM=500&XEM=200&AUD=10000
+* If you have 1BTC, 300XRP and invested AUD $1000: https://jrcrypt.herokuapp.com/?BTC=1&XRP=300&AUD=1000
+* View app with all supported coins: [DEMO](https://jrcrypt.herokuapp.com/?BTC=0.1&ETH=1&XRP=100&BCH=0.5&LTC=2&XRB=25&REQ=1000&IOTA=250ADA=500&XLM=500&AUD=10000)
 
 ## Development
 * Rename `.env.sample` to `.env`
 * Update `.env` with an available local PORT (eg: 8000).
 * `npm install` 
 * `npm run dev`
-* Visit `http://localhost:8000/?BTC=0.1&ETH=1&XRP=100&BCH=0.5&LTC=2&XRB=25&REQ=1000&IOTA=250ADA=500&XLM=500&XEM=200&AUD=5000`
+* Visit `http://localhost:8000/?BTC=0.1&ETH=1&XRP=100&BCH=0.5&LTC=2&XRB=25&REQ=1000&IOTA=250ADA=500&XLM=500&AUD=5000`
 
 ## ToDo
 * Add NEM (XEM) support
