@@ -30,7 +30,7 @@ app.get('/', async (req, res) => {
 		req: parseFloat(req.query.REQ) || 0,
 		iota: parseFloat(req.query.IOTA) || 0,
 		xlm: parseFloat(req.query.XLM) || 0,
-		xem: parseFloat(req.query.XEM) || 0,
+		xem: 0, // WIP
 		aud: parseFloat(req.query.AUD) || 0,
 	};
 	const GET_BTC_AUD_PRICE = btcm.getPrice({ tick: 'BTC', fetchPrice: true });
@@ -42,22 +42,22 @@ app.get('/', async (req, res) => {
 	const GET_BITGRAIL_PRICES = bitgrail.getMarkets({ fetchPrice: coins.xrb });
 
 	let BTC_AUD_PRICE,
-	 ETH_AUD_PRICE,
-	 BCH_AUD_PRICE,
-	 LTC_AUD_PRICE,
-	 XRP_AUD_PRICE,
-	 ADA_BTC_PRICE,
-	 ADA_ETH_PRICE,
-	 REQ_BTC_PRICE,
-	 REQ_ETH_PRICE,
-	 IOTA_BTC_PRICE,
-	 IOTA_ETH_PRICE,
-	 XLM_BTC_PRICE,
-	 XLM_ETH_PRICE,
-	 XEM_BTC_PRICE,
-	 XEM_ETH_PRICE,
-	 XRB_BTC_PRICE,
-	 XRB_ETH_PRICE;
+	ETH_AUD_PRICE,
+	BCH_AUD_PRICE,
+	LTC_AUD_PRICE,
+	XRP_AUD_PRICE,
+	ADA_BTC_PRICE,
+	ADA_ETH_PRICE,
+	REQ_BTC_PRICE,
+	REQ_ETH_PRICE,
+	IOTA_BTC_PRICE,
+	IOTA_ETH_PRICE,
+	XLM_BTC_PRICE,
+	XLM_ETH_PRICE,
+	XEM_BTC_PRICE = 0,
+	XEM_ETH_PRICE = 0,
+	XRB_BTC_PRICE,
+	XRB_ETH_PRICE;
 
 	try {
 		[ BTC_AUD_PRICE,
@@ -65,7 +65,7 @@ app.get('/', async (req, res) => {
 		BCH_AUD_PRICE,
 		LTC_AUD_PRICE,
 		XRP_AUD_PRICE,
-		{ ADA_BTC_PRICE, ADA_ETH_PRICE, REQ_BTC_PRICE, REQ_ETH_PRICE, IOTA_BTC_PRICE, IOTA_ETH_PRICE, XLM_BTC_PRICE, XLM_ETH_PRICE, XEM_BTC_PRICE, XEM_ETH_PRICE },
+		{ ADA_BTC_PRICE, ADA_ETH_PRICE, REQ_BTC_PRICE, REQ_ETH_PRICE, IOTA_BTC_PRICE, IOTA_ETH_PRICE, XLM_BTC_PRICE, XLM_ETH_PRICE },
 		{ XRB_BTC_PRICE, XRB_ETH_PRICE } ] = await Promise.all([
 			GET_BTC_AUD_PRICE,
 			GET_ETH_AUD_PRICE,
@@ -101,8 +101,8 @@ app.get('/', async (req, res) => {
 	const xlm_value_via_eth = ETH_AUD_PRICE * XLM_ETH_PRICE * coins.xlm;
 	const max_xlm_value = Math.max(xlm_value_via_eth, xlm_value_via_btc);
 
-	const xem_value_via_btc = BTC_AUD_PRICE * XEM_BTC_PRICE * coins.iota;
-	const xem_value_via_eth = ETH_AUD_PRICE * XEM_ETH_PRICE * coins.iota;
+	const xem_value_via_btc = BTC_AUD_PRICE * XEM_BTC_PRICE * coins.xem;
+	const xem_value_via_eth = ETH_AUD_PRICE * XEM_ETH_PRICE * coins.xem;
 	const max_xem_value = Math.max(xem_value_via_eth, xem_value_via_btc);
 
 	const ada_value_via_btc = BTC_AUD_PRICE * ADA_BTC_PRICE * coins.ada;
@@ -261,13 +261,11 @@ app.get('/', async (req, res) => {
 		data.PIE_CHART.labels.push('ADA');
 		data.PIE_CHART.colors.push('#377fe3');
 	}
-
 	if (coins.xlm) {
 		data.PIE_CHART.data.push((max_xlm_value / data.TOTAL_PORTFOLIO_VALUE.value_raw));
 		data.PIE_CHART.labels.push('XLM');
-		data.PIE_CHART.colors.push('#dcf2f9');
+		data.PIE_CHART.colors.push('#5f6f78');
 	}
-
 	if (coins.xem) {
 		data.PIE_CHART.data.push((max_xem_value / data.TOTAL_PORTFOLIO_VALUE.value_raw));
 		data.PIE_CHART.labels.push('XEM');
