@@ -8,7 +8,7 @@ const getMarkets = ({ fetchPrice }) => {
 				XRB_ETH_PRICE: 0,
 			});
 		}
-		return fetchUrl('https://bitgrail.com/api/v1/markets', (err, meta, response) => {
+		return fetchUrl('https://api.bitgrail.com/v1/markets', (err, meta, response) => {
 			if(err) {
 				return reject(err);
 			}
