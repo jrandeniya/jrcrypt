@@ -19,7 +19,7 @@ const getMarkets = ({ fetchPrice }) => {
 				return reject(error);
 			}
 
-			const { response: { BTC, XRB } } = JSON.parse(responseString);
+			const { response: { BTC, XRB } } = response;
 			const XRBBTC = BTC.find(pair => pair.market === 'XRB/BTC');
 			const XRBETH = XRB.find(pair => pair.market === 'ETH/XRB');
 			return resolve({
